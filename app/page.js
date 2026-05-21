@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -8,128 +8,141 @@ export default function Home() {
     "يسرني أن أتقدم إليكم بأحر التهاني والتبريكات بمناسبة عيد الأضحى المبارك"
   );
 
+  const [template, setTemplate] = useState(1);
+
+  const cardRef = useRef();
+
+  const templates = {
+    1: {
+      bg:"linear-gradient(135deg,#0f172a,#0f766e)",
+      title:"🌙 عيد أضحى مبارك"
+    },
+    2: {
+      bg:"linear-gradient(135deg,#7c2d12,#f59e0b)",
+      title:"✨ كل عام وأنتم بخير"
+    },
+    3: {
+      bg:"linear-gradient(135deg,#312e81,#9333ea)",
+      title:"🕌 تقبل الله طاعاتكم"
+    }
+  };
+
+  async function downloadPNG(){
+
+    const html2canvas=(await import("html2canvas")).default;
+
+    const canvas=await html2canvas(cardRef.current);
+
+    const link=document.createElement("a");
+
+    link.download="eid-card.png";
+
+    link.href=canvas.toDataURL();
+
+    link.click();
+  }
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        padding: "20px",
-        direction: "rtl",
-        fontFamily: "Tahoma",
-        background:
-          "linear-gradient(135deg,#0f172a,#1e293b,#0f766e)",
-        color: "white",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-        }}
-      >
-        ✨ منصة بطاقات عيد الأضحى
-      </h1>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          marginBottom: "25px",
-        }}
-      >
-        <input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="اكتب التهنئة"
-          style={{
-            padding: "14px",
-            borderRadius: "12px",
-            border: "none",
-            fontSize: "15px",
-          }}
-        />
+<main
+style={{
+minHeight:"100vh",
+padding:"20px",
+direction:"rtl",
+background:"#111827",
+color:"white"
+}}
+>
 
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="اكتب الاسم"
-          style={{
-            padding: "14px",
-            borderRadius: "12px",
-            border: "none",
-            fontSize: "15px",
-          }}
-        />
-      </div>
+<h1 style={{textAlign:"center"}}>
+منصة بطاقات عيد الأضحى
+</h1>
 
-      <div
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          padding: "35px",
-          borderRadius: "30px",
-          background: "rgba(255,255,255,0.12)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          boxShadow:
-            "0 8px 30px rgba(0,0,0,.35)",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "-20px",
-            left: "-10px",
-            fontSize: "90px",
-            opacity: .25
-          }}
-        >
-          🌙
-        </div>
+<div
+style={{
+display:"flex",
+gap:"10px",
+overflow:"auto",
+margin:"20px 0"
+}}
+>
 
-        <div
-          style={{
-            position: "absolute",
-            bottom: "10px",
-            right: "15px",
-            fontSize: "50px",
-            opacity: .2
-          }}
-        >
-          ✨
-        </div>
+<button onClick={()=>setTemplate(1)}>
+قالب 1
+</button>
 
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "30px",
-            marginBottom: "20px"
-          }}
-        >
-          عيد أضحى مبارك
-        </h2>
+<button onClick={()=>setTemplate(2)}>
+قالب 2
+</button>
 
-        <p
-          style={{
-            textAlign: "center",
-            lineHeight: "2",
-            fontSize: "18px"
-          }}
-        >
-          {message}
-        </p>
+<button onClick={()=>setTemplate(3)}>
+قالب 3
+</button>
 
-        <h3
-          style={{
-            textAlign: "center",
-            marginTop: "25px",
-            fontSize: "25px",
-            color: "#fde68a"
-          }}
-        >
-          {name}
-        </h3>
-      </div>
-    </main>
+</div>
+
+<input
+value={message}
+onChange={(e)=>setMessage(e.target.value)}
+placeholder="التهنئة"
+style={{
+width:"100%",
+padding:"12px",
+marginBottom:"10px"
+}}
+/>
+
+<input
+value={name}
+onChange={(e)=>setName(e.target.value)}
+placeholder="الاسم"
+style={{
+width:"100%",
+padding:"12px",
+marginBottom:"20px"
+}}
+/>
+
+<div
+ref={cardRef}
+style={{
+background:templates[template].bg,
+padding:"40px",
+borderRadius:"25px",
+textAlign:"center"
+}}
+>
+
+<h2>
+{templates[template].title}
+</h2>
+
+<p>
+{message}
+</p>
+
+<h3>
+{name}
+</h3>
+
+</div>
+
+<br/>
+
+<button
+onClick={downloadPNG}
+style={{
+width:"100%",
+padding:"15px",
+borderRadius:"15px",
+border:"none",
+fontSize:"16px"
+}}
+>
+⬇ تنزيل PNG
+</button>
+
+</main>
+
   );
-              }
+  }
