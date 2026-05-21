@@ -1,15 +1,17 @@
 {
-  "name":"eid-card-maker",
-  "private": true,
-  "scripts": {
-    "dev":"next dev",
-    "build":"next build",
-    "start":"next start"
-  },
-  "dependencies": {
-  "next":"latest",
-  "react":"latest",
-  "react-dom":"latest",
-  "html2canvas":"^1.4.1"
+"name":"eid-card-maker",
+"private":true,
+"scripts":{
+"dev":"next dev",
+"build":"next build",
+"start":"next start"
+},
+"dependencies":{
+"next":"latest",
+"react":"latest",
+"react-dom":"latest",
+"html2canvas":"^1.4.1",
+"jspdf":"^3.0.1",
+"react-draggable":"^4.4.6"
 }
 }
