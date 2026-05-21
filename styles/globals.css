@@ -1,57 +1,199 @@
-body{
-
+*{
 margin:0;
-background:#0f172a;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#08111f;
 font-family:Tahoma;
 direction:rtl;
+color:white;
+}
+
+.container{
+display:flex;
+gap:25px;
+padding:20px;
+min-height:100vh;
+}
+
+.sidebar{
+width:320px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.1);
+border-radius:25px;
+padding:20px;
+}
+
+.sidebar h2{
+margin-bottom:20px;
+font-size:24px;
+}
+
+.sidebar input,
+.sidebar textarea,
+.sidebar select{
+
+width:100%;
+padding:14px;
+border:none;
+outline:none;
+margin:10px 0;
+border-radius:14px;
+background:#162033;
 color:white;
 
 }
 
-.container{
-
-display:flex;
-padding:20px;
-gap:20px;
-
-}
-
-.sidebar{
-
-width:300px;
-background:#1e293b;
-padding:20px;
-border-radius:20px;
-
-}
-
-.sidebar input,
-.sidebar textarea{
+.sidebar button{
 
 width:100%;
-margin:10px 0;
-padding:12px;
-border-radius:10px;
+padding:14px;
+border:none;
+border-radius:14px;
+margin-top:10px;
+cursor:pointer;
+background:linear-gradient(
+90deg,
+#14b8a6,
+#0ea5e9
+);
+
+color:white;
+font-size:16px;
+
+}
+
+.editor{
+
+flex:1;
+
+}
+
+.templates{
+
+display:flex;
+gap:12px;
+overflow:auto;
+margin-bottom:25px;
+
+}
+
+.template-card{
+
+min-width:120px;
+height:160px;
+border-radius:20px;
+cursor:pointer;
+border:2px solid transparent;
+transition:.3s;
+
+}
+
+.template-card:hover{
+
+transform:scale(1.05);
 
 }
 
 .card{
 
 width:700px;
-height:1000px;
-padding:40px;
+height:950px;
+margin:auto;
 border-radius:30px;
-text-align:center;
+overflow:hidden;
 position:relative;
+
+padding:50px;
+
+box-shadow:
+0 20px 80px rgba(0,0,0,.5);
+
+}
+
+.title{
+
+font-size:55px;
+font-weight:bold;
+text-align:center;
+margin-top:20px;
+
+}
+
+.message{
+
+font-size:28px;
+line-height:2;
+margin-top:50px;
+text-align:center;
+
+}
+
+.username{
+
+font-size:40px;
+font-weight:bold;
+margin-top:50px;
+text-align:center;
+color:#FFD700;
 
 }
 
 .user-image{
 
-width:160px;
-height:160px;
+position:absolute;
+
+top:220px;
+left:50%;
+transform:translateX(-50%);
+
+width:220px;
+height:220px;
+
 border-radius:50%;
 object-fit:cover;
-border:5px solid white;
+
+border:8px solid white;
+
+box-shadow:
+0 0 50px rgba(255,255,255,.4);
+
+}
+
+.moon{
+
+position:absolute;
+
+top:40px;
+right:40px;
+
+font-size:70px;
+
+}
+
+.lantern{
+
+position:absolute;
+
+font-size:50px;
+
+opacity:.7;
+
+}
+
+.l1{
+
+top:100px;
+left:70px;
+
+}
+
+.l2{
+
+top:100px;
+right:70px;
 
 }
