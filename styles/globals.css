@@ -1,0 +1,57 @@
+body{
+
+margin:0;
+background:#0f172a;
+font-family:Tahoma;
+direction:rtl;
+color:white;
+
+}
+
+.container{
+
+display:flex;
+padding:20px;
+gap:20px;
+
+}
+
+.sidebar{
+
+width:300px;
+background:#1e293b;
+padding:20px;
+border-radius:20px;
+
+}
+
+.sidebar input,
+.sidebar textarea{
+
+width:100%;
+margin:10px 0;
+padding:12px;
+border-radius:10px;
+
+}
+
+.card{
+
+width:700px;
+height:1000px;
+padding:40px;
+border-radius:30px;
+text-align:center;
+position:relative;
+
+}
+
+.user-image{
+
+width:160px;
+height:160px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid white;
+
+}
