@@ -1,191 +1,110 @@
 "use client";
 
-import { useState, useRef } from "react";
+import {useState} from "react";
 
-export default function Home() {
+import Sidebar from "../components/Sidebar";
+
+import EidCard from "../components/EidCard";
+
+import {templates} from "../components/Templates";
+
+export default function Home(){
 
 const [name,setName]=useState("");
 
 const [message,setMessage]=useState(
-"يسرني أن أتقدم إليكم بأحر التهاني والتبريكات بمناسبة عيد الأضحى المبارك"
+"يسرني أن أتقدم إليكم بأحر التهاني"
 );
+
+const [fontSize,setFontSize]=useState(20);
+
+const [textColor,setTextColor]=useState("#ffffff");
 
 const [image,setImage]=useState(null);
 
-const [imageSize,setImageSize]=useState(120);
+const [selectedTemplate,setSelectedTemplate]=
+useState(templates[0]);
 
-const cardRef=useRef();
-
-const handleImage=(e)=>{
+function upload(e){
 
 const file=e.target.files[0];
-
-if(file){
 
 const reader=new FileReader();
 
 reader.onload=()=>{
 
-setImage(reader.result);
+setImage(reader.result)
 
-};
+}
 
 reader.readAsDataURL(file);
 
 }
 
-};
-
-async function downloadPNG(){
-
-const html2canvas=(await import("html2canvas")).default;
-
-const canvas=await html2canvas(cardRef.current);
-
-const link=document.createElement("a");
-
-link.download="eid-card.png";
-
-link.href=canvas.toDataURL();
-
-link.click();
-
-}
-
 return(
 
-<main
-style={{
-minHeight:"100vh",
-padding:"20px",
-background:"#111827",
-color:"white",
-direction:"rtl"
-}}
->
+<div className="container">
 
-<h1 style={{textAlign:"center"}}>
+<Sidebar
 
-منصة بطاقات عيد الأضحى
+name={name}
+setName={setName}
 
-</h1>
+message={message}
+setMessage={setMessage}
 
-<input
-value={message}
-onChange={(e)=>setMessage(e.target.value)}
-placeholder="نص التهنئة"
-style={{
-width:"100%",
-padding:"12px",
-marginBottom:"10px"
-}}
-/>
+fontSize={fontSize}
+setFontSize={setFontSize}
 
-<input
-value={name}
-onChange={(e)=>setName(e.target.value)}
-placeholder="الاسم"
-style={{
-width:"100%",
-padding:"12px",
-marginBottom:"10px"
-}}
-/>
+textColor={textColor}
+setTextColor={setTextColor}
 
-<input
-type="file"
-accept="image/*"
-onChange={handleImage}
-style={{
-marginBottom:"10px"
-}}
 />
 
 <div>
 
-حجم الصورة
-
 <input
-type="range"
-min="80"
-max="250"
-value={imageSize}
-onChange={(e)=>setImageSize(e.target.value)}
+type="file"
+onChange={upload}
 />
 
-</div>
-
-<br/>
-
-<div
-ref={cardRef}
-style={{
-padding:"30px",
-borderRadius:"25px",
-background:
-"linear-gradient(135deg,#0f172a,#0f766e)",
-textAlign:"center"
-}}
->
-
-<h2>
-
-🌙 عيد أضحى مبارك
-
-</h2>
+<div>
 
 {
 
-image &&
-
-<img
-src={image}
-style={{
-width:imageSize+"px",
-height:imageSize+"px",
-borderRadius:"50%",
-objectFit:"cover",
-border:"4px solid white"
-}}
-/>
-
-}
-
-<p
-style={{
-lineHeight:"2"
-}}
->
-
-{message}
-
-</p>
-
-<h3>
-
-{name}
-
-</h3>
-
-</div>
-
-<br/>
+templates.map((t)=>(
 
 <button
-onClick={downloadPNG}
-style={{
-width:"100%",
-padding:"15px",
-border:"none",
-borderRadius:"15px"
-}}
+key={t.id}
+onClick={()=>
+setSelectedTemplate(t)
+}
 >
 
-⬇ تنزيل PNG
+{t.title}
 
 </button>
 
-</main>
+))
+
+}
+
+</div>
+
+<EidCard
+
+selectedTemplate={selectedTemplate}
+message={message}
+name={name}
+image={image}
+fontSize={fontSize}
+textColor={textColor}
+
+/>
+
+</div>
+
+</div>
 
 )
 
