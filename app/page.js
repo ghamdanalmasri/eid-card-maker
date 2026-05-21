@@ -1,43 +1,57 @@
 "use client";
 
-import {useState} from "react";
+import {useState,useRef} from "react";
 
 import Sidebar from "../components/Sidebar";
 
-import EidCard from "../components/EidCard";
+import CardCanvas from "../components/CardCanvas";
 
-import {templates} from "../components/Templates";
+import ExportButtons from "../components/ExportButtons";
+
+import {templates}
+from "../lib/templates";
 
 export default function Home(){
 
-const [name,setName]=useState("");
+const cardRef=
+useRef();
 
-const [message,setMessage]=useState(
-"يسرني أن أتقدم إليكم بأحر التهاني"
+const [name,setName]=
+useState("");
+
+const [message,setMessage]=
+useState("يسرني أن أتقدم إليكم بأحر التهاني");
+
+const [fontSize,setFontSize]=
+useState(28);
+
+const [image,setImage]=
+useState(null);
+
+const [template]=
+useState(
+templates[0]
 );
-
-const [fontSize,setFontSize]=useState(20);
-
-const [textColor,setTextColor]=useState("#ffffff");
-
-const [image,setImage]=useState(null);
-
-const [selectedTemplate,setSelectedTemplate]=
-useState(templates[0]);
 
 function upload(e){
 
-const file=e.target.files[0];
+const file=
+e.target.files[0];
 
-const reader=new FileReader();
+const reader=
+new FileReader();
 
 reader.onload=()=>{
 
-setImage(reader.result)
+setImage(
+reader.result
+)
 
-}
+};
 
-reader.readAsDataURL(file);
+reader.readAsDataURL(
+file
+);
 
 }
 
@@ -56,50 +70,32 @@ setMessage={setMessage}
 fontSize={fontSize}
 setFontSize={setFontSize}
 
-textColor={textColor}
-setTextColor={setTextColor}
+upload={upload}
 
 />
 
 <div>
 
-<input
-type="file"
-onChange={upload}
+<div ref={cardRef}>
+
+<CardCanvas
+
+template={template}
+
+name={name}
+
+message={message}
+
+fontSize={fontSize}
+
+image={image}
+
 />
-
-<div>
-
-{
-
-templates.map((t)=>(
-
-<button
-key={t.id}
-onClick={()=>
-setSelectedTemplate(t)
-}
->
-
-{t.title}
-
-</button>
-
-))
-
-}
 
 </div>
 
-<EidCard
-
-selectedTemplate={selectedTemplate}
-message={message}
-name={name}
-image={image}
-fontSize={fontSize}
-textColor={textColor}
-
+<ExportButtons
+cardRef={cardRef}
 />
 
 </div>
