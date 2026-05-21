@@ -7,9 +7,9 @@
     "start":"next start"
   },
   "dependencies": {
-    "next":"latest",
-    "react":"latest",
-    "react-dom":"latest"
-    "html2canvas":"^1.4.1"
-  }
+  "next":"latest",
+  "react":"latest",
+  "react-dom":"latest",
+  "html2canvas":"^1.4.1"
+}
 }
