@@ -3,88 +3,77 @@
 import { useState, useRef } from "react";
 
 export default function Home() {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState(
-    "يسرني أن أتقدم إليكم بأحر التهاني والتبريكات بمناسبة عيد الأضحى المبارك"
-  );
 
-  const [template, setTemplate] = useState(1);
+const [name,setName]=useState("");
 
-  const cardRef = useRef();
+const [message,setMessage]=useState(
+"يسرني أن أتقدم إليكم بأحر التهاني والتبريكات بمناسبة عيد الأضحى المبارك"
+);
 
-  const templates = {
-    1: {
-      bg:"linear-gradient(135deg,#0f172a,#0f766e)",
-      title:"🌙 عيد أضحى مبارك"
-    },
-    2: {
-      bg:"linear-gradient(135deg,#7c2d12,#f59e0b)",
-      title:"✨ كل عام وأنتم بخير"
-    },
-    3: {
-      bg:"linear-gradient(135deg,#312e81,#9333ea)",
-      title:"🕌 تقبل الله طاعاتكم"
-    }
-  };
+const [image,setImage]=useState(null);
 
-  async function downloadPNG(){
+const [imageSize,setImageSize]=useState(120);
 
-    const html2canvas=(await import("html2canvas")).default;
+const cardRef=useRef();
 
-    const canvas=await html2canvas(cardRef.current);
+const handleImage=(e)=>{
 
-    const link=document.createElement("a");
+const file=e.target.files[0];
 
-    link.download="eid-card.png";
+if(file){
 
-    link.href=canvas.toDataURL();
+const reader=new FileReader();
 
-    link.click();
-  }
+reader.onload=()=>{
 
-  return (
+setImage(reader.result);
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+};
+
+async function downloadPNG(){
+
+const html2canvas=(await import("html2canvas")).default;
+
+const canvas=await html2canvas(cardRef.current);
+
+const link=document.createElement("a");
+
+link.download="eid-card.png";
+
+link.href=canvas.toDataURL();
+
+link.click();
+
+}
+
+return(
 
 <main
 style={{
 minHeight:"100vh",
 padding:"20px",
-direction:"rtl",
 background:"#111827",
-color:"white"
+color:"white",
+direction:"rtl"
 }}
 >
 
 <h1 style={{textAlign:"center"}}>
+
 منصة بطاقات عيد الأضحى
+
 </h1>
-
-<div
-style={{
-display:"flex",
-gap:"10px",
-overflow:"auto",
-margin:"20px 0"
-}}
->
-
-<button onClick={()=>setTemplate(1)}>
-قالب 1
-</button>
-
-<button onClick={()=>setTemplate(2)}>
-قالب 2
-</button>
-
-<button onClick={()=>setTemplate(3)}>
-قالب 3
-</button>
-
-</div>
 
 <input
 value={message}
 onChange={(e)=>setMessage(e.target.value)}
-placeholder="التهنئة"
+placeholder="نص التهنئة"
 style={{
 width:"100%",
 padding:"12px",
@@ -99,31 +88,85 @@ placeholder="الاسم"
 style={{
 width:"100%",
 padding:"12px",
-marginBottom:"20px"
+marginBottom:"10px"
 }}
 />
+
+<input
+type="file"
+accept="image/*"
+onChange={handleImage}
+style={{
+marginBottom:"10px"
+}}
+/>
+
+<div>
+
+حجم الصورة
+
+<input
+type="range"
+min="80"
+max="250"
+value={imageSize}
+onChange={(e)=>setImageSize(e.target.value)}
+/>
+
+</div>
+
+<br/>
 
 <div
 ref={cardRef}
 style={{
-background:templates[template].bg,
-padding:"40px",
+padding:"30px",
 borderRadius:"25px",
+background:
+"linear-gradient(135deg,#0f172a,#0f766e)",
 textAlign:"center"
 }}
 >
 
 <h2>
-{templates[template].title}
+
+🌙 عيد أضحى مبارك
+
 </h2>
 
-<p>
+{
+
+image &&
+
+<img
+src={image}
+style={{
+width:imageSize+"px",
+height:imageSize+"px",
+borderRadius:"50%",
+objectFit:"cover",
+border:"4px solid white"
+}}
+/>
+
+}
+
+<p
+style={{
+lineHeight:"2"
+}}
+>
+
 {message}
+
 </p>
 
 <h3>
+
 {name}
+
 </h3>
+
 </div>
 
 <br/>
@@ -133,15 +176,17 @@ onClick={downloadPNG}
 style={{
 width:"100%",
 padding:"15px",
-borderRadius:"15px",
 border:"none",
-fontSize:"16px"
+borderRadius:"15px"
 }}
 >
+
 ⬇ تنزيل PNG
+
 </button>
 
 </main>
 
-  );
-  }
+)
+
+}
