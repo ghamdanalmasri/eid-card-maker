@@ -1,15 +1,11 @@
 "use client";
 
-import Draggable from "react-draggable";
-
 export default function EidCard({
 
 selectedTemplate,
 message,
 name,
-image,
-fontSize,
-textColor
+image
 
 }){
 
@@ -24,9 +20,21 @@ background:selectedTemplate.bg
 }}
 >
 
-<h1>
+<div className="moon">
+🌙
+</div>
 
-🌙 عيد أضحى مبارك
+<div className="lantern l1">
+🏮
+</div>
+
+<div className="lantern l2">
+🏮
+</div>
+
+<h1 className="title">
+
+عيد أضحى مبارك
 
 </h1>
 
@@ -34,31 +42,20 @@ background:selectedTemplate.bg
 
 image &&
 
-<Draggable>
-
 <img
 src={image}
 className="user-image"
 />
 
-</Draggable>
-
 }
 
-<p
-style={{
-
-fontSize:fontSize+"px",
-color:textColor
-
-}}
->
+<p className="message">
 
 {message}
 
 </p>
 
-<h2>
+<h2 className="username">
 
 {name}
 
