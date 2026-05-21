@@ -10,5 +10,6 @@
     "next":"latest",
     "react":"latest",
     "react-dom":"latest"
+    "html2canvas":"^1.4.1"
   }
 }
